@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+
+  <title>reveal.js - Slide Backgrounds</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/reveal.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/theme/simple.css" id="theme">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/plugin/highlight/monokai.css" >
+  <style>
+    div.slides > section {
+      padding-top: 100px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="reveal">
+
+    <div class="slides" >
+
+      <section id="indice" data-background-size="contain" data-background-image="../fondo.png">
+
+        <section>
+          <h3>Índice</h3>
+          <ul>
+            <li>Tipos de Datos</li>
+            <li>Definición de Esquemas</li>
+            <li>Operacines CRUD</li>
+            <li>Ejerecicio 1</li>
+            <li>Instalación de Mysql Workbench</li>
+          </ul>
+        </section>
+      </section>
+      <section id="tipos-datos" data-background-size="contain" data-background-image="../fondo.png">
+        <section>
+          <h3>Tipos de Datos</h3>
+          <ul>
+            <li class="fragment">Numéricos</li>
+            <li class="fragment">Fecha y hora</li>
+            <li class="fragment">Cadenas de caracteres</li>
+            <li class="fragment">Espaciales</li>
+            <li class="fragment">JSON</li>
+          </ul>
+        </section>
+        <section>
+          <h3>Numéricos</h3>
+          <ul>
+            <li class="fragment">Bit(M)</li>
+            <li class="fragment">TINYINT, SMALLINT, MEDIUM INT, INT, BIG INT[(M)]  [UNSIGNED] [ZEROFILL]</li>
+            <li class="fragment">BOOL, BOOLEAN</li>
+            <li class="fragment">SERIAL</li>
+            <li class="fragment">DECIMAL, DEC(M,DS)</li>
+            <li class="fragment">FLOAT, DOUBLE</li>
+          </ul>
+        </section>
+        <section>
+          <h3>Fecha y Hora</h3>
+          <ul>
+            <li class="fragment">DATE (yyyy-mm-dd)</li>
+            <li class="fragment">DATETiME(fsp)</li>
+            <li class="fragment">TIMESTAMP(fsp)</li>
+            <li class="fragment">TIME(fsp)</li>
+            <li class="fragment">YEAR</li>
+          </ul>
+        </section>
+        <section>
+          <h3>Cadenas de texto</h3>
+          <ul>
+            <li class="fragment">CHAR</li>
+            <li class="fragment">VARCHAR(M)</li>
+            <li class="fragment">BINARY</li>
+            <li class="fragment">VARBINARY</li>
+            <li class="fragment">BLOB</li>
+            <li class="fragment">TEXT</li>
+            <li class="fragment">ENUM ('valor1', ... , 'valorn')</li>
+            <li class="fragment">SET</li>
+          </ul>
+        </section>
+        <section>
+          <h3>Datos espaciales</h3>
+          <ul>
+            <li class="fragment">GEOMETRY</li>
+            <li class="fragment">POINT</li>
+            <li class="fragment">LINESTRING</li>
+            <li class="fragment">POLYGON</li>
+            <li class="fragment">MULTIPOINT</li>
+            <li class="fragment">MULTILINESTRING</li>
+            <li class="fragment">MULTIPOLYGON</li>
+            <li class="fragment">GEOMETRYCOLLECTION</li>
+
+          </ul>
+        </section>
+        <section>
+          <h3>JSON</h3>
+          <ul>
+            
+            <li class="fragment">A partir de la version 5.7.8, MySQL puede aceptar valores JSON</li>
+            <li class="fragment">JSON_TYPE es para obtener el tipo: String, Number, Array, Object</li>
+            <li class="fragment">JSON_ARRAY y JSON_OBJECT es para crear objectos JSON</li>
+            <li class="fragment">JSON_EXTRACT (->) se usa para accesar valores, usa una path expression</li>
+            <li class="fragment">JSON_SET, JSON_INSERT, JSON_REPLACE, JSON_REMOVE se usa para modificar</li>
+          </ul>
+        </section>
+        <section>
+          <h3>Restricciones para tipos de datos</h3>
+          <ul style="font-size: 2rem;">
+            <li class="fragment">NOT NULL - Asegura que no sea NULL</li>
+            <li class="fragment">UNIQUE - Asegura que no haya valores repetidos</li>
+            <li class="fragment">PRIMARY KEY - Identificador de fila, (UNIQUE + NOT_NULL)</li>
+            <li class="fragment">FOREIGN KEY - Previene acciones que evitan perder datos en tablas relacionadas</li>
+            <li class="fragment">CHECK - Define condicion necesaria</li>
+            <li class="fragment">DEFAULT - En caso de no especificar valor, agrega este por defecto</li>
+            <li class="fragment">CREATE INDEX - Crea un indice para eficientizar las búsquedas</li>
+
+            <li class="fragment">AUTO_INCREMENT, empieza en 1 y pone el valor anteror más alto + 1</li>
+          </ul>
+        </section>
+        <section>
+          <p style="font-size: 2rem;">
+            AVG_ROW_LENGTH, CHARACTER SET, CHECKSUM, COLLATE, COMMENT, COMPRESSION, CONNECTION, {DATA | INDEX} DIRECTORY, DELAY_KEY_WRITE, ENCRYPTION, ENGINE, INSERT_METHOD, KEY_BLOCK_SIZE, MAX_ROWS, MIN_ROWS, PACK_KEYS, PASSWORD, ROW_FORMAT, STATS_AUTO_RECALC, STATS_PERSISTENT, STATS_SAMPLE_PAGES, TABLESPACE tablespace_name [STORAGE {DISK | MEMORY}]
+            UNION
+          </p>
+        </section>
+        <section>
+          <p>
+            <a href="https://dev.mysql.com/doc/refman/5.7/en/data-types.html">Documentacion Tipo de Datos</a>
+          </p>
+        </section>
+      </section>
+      <section id="esquema" data-background-size="contain" data-background-image="../fondo.png">
+        <section>
+          <h3>Definición de esquemas</h3>
+          <p>Para definir los campos de una tabla y sus tipos utilizamos el comando CREATE TABLE de esta manera</p>
+          <pre><code data-trim>
+            CREATE TABLE nombre_tabla (
+              columna1 tipo [restriccion],
+              columna2 tipo [restriccion],
+              columna3 tipo [restriccion],
+             ....
+             [CHECKS],[KEYS], [INDEXES]
+
+          ); 
+          </code></pre>
+        </section>
+        <section>
+          <p>Para modificar un esquema de una tabla usamos el comando ALTER TABLE</p>
+          <pre><code data-trim>
+            ALTER TABLE nombre_tabla 
+            [ADD columna tipo [restricciones]]
+            [DROP COLUMN columna ]
+            [MODIFY COLUMN columna tipo [restricciones]]
+          </code></pre>
+        </section>
+        <section>
+          <p>Para borrar una table usamos el comando DROP TABLE nombre_tabla</p>
+        </section>
+        <section>
+          <p>Para copiar una tabla usamos los camandos LIKE o AS</p>
+          <pre>
+            <code>CREATE TABLE new_tbl LIKE orig_tbl;</code>
+            <code>
+              CREATE TABLE new_tbl AS 
+              SELECt [columna1, columna2] orig_tbl [WHERE];
+            </code>
+          </pre>
+          <p>Estos dos comandos nos ayudan mucho para no comprometer la integridad de una tabla al quererla modificar y a ahorrarnos procesamiento</p>
+        </section>
+      </section>
+      <section id="crud" data-background-size="contain" data-background-image="../fondo.png">
+        <section>
+          <h3>Operaciones CRUD</h3>
+          <ul>
+            <li>Create: INSERT INTO</li>
+            <li>Read: SELECT</li>
+            <li>UPDATE</li>
+            <li>DELETE</li>
+          </ul>
+        </section>
+        <section>
+          <h3>Create</h3>
+          <p>Usando el comando INSERT INTO insertamos registros a una tabla</p>
+          <pre><code data-trim>
+            INSERT INTO table_name (column1, column2, column3, ...)
+            VALUES (value1, value2, value3, ...)[,(otro conjunto de valores)]; 
+          </code></pre>
+        </section>
+        <section>
+          <h3>Update</h3>
+          <p>Usamos el comando UPDATE para realizar cambios en os registros</p>
+          <pre>
+            <code data-trim>
+              UPDATE table_name
+              SET column1 = value1, column2 = value2, ...
+              WHERE condition; 
+            </code>
+          </pre>
+        </section>
+        <section>
+          <p>Se ocupa el comando SELECT para obtener valores de la base de datos</p>
+          <pre><code data-trim>
+            SELECT
+            [ALL | DISTINCT | DISTINCTROW ]
+            select_expr [, select_expr] ...
+            [into_option]
+            [FROM table_references]
+            [WHERE where_condition]
+            [GROUP BY {col_name} ]
+            [ORDER BY {col_name}]
+            [LIMIT n]
+            
+          </code></pre>
+        </section>
+        <section>
+          <h3>JOINS</h3>
+          <p>
+            Los JOIN son usados en una sentencia SQL para recuperar datos de varias tablas al mismo tiempo. Estas tablas tienen que estar relacionadas de alguna forma
+          </p>
+          <ul>
+            <li class="fragment"></li>
+          </ul>
+        </section>
+        <section>
+          <h3>INNER JOIN</h3>
+          <p>
+            INNER JOIN o simplemente JOIN. Este tipo de unión te ayuda a combinar varias tablas, y te devuelve únicamente los datos que estén disponibles en todas las tablas a la vez.
+          </p>
+        </section>
+        <section>
+          <h3>LEFT JOIN</h3>
+          <p>
+            Devuelve todos los resultados que coincidan en la primera tabla, con los datos que tenga de la segunda. En el caso de que falte algún dato, devolverá un valor null en lugar del dato, pero seguiremos teniendo el valor de la primera tabla
+          </p>
+        </section>
+        <section>
+          <h3>RIGHT JOIN</h3>
+          <p>
+            Devuelve todos los resultados que coincidan en la otras tablas, con los datos que tenga de la primera. 
+          </p>
+        </section>
+        <section>
+          <h3>OUTTER JOIN</h3>
+          <p>En MySQL no existe, se tendrá que usar UNION </p>
+        </section>
+        <section>
+          <h3>UNION</h3>
+          <p>
+            Se usa para unir los resultados de múltiples seclects. Debe de seguir ciertas condiciones
+          </p>
+          <ul>
+            <li>Mismo número de columnas</li>
+            <li>Mismo tipo de dato en cada columna</li>
+            <li>Mismo orden de columnas</li>
+          </ul>
+        </section>
+        <section>
+          Operadores
+        </section>
+      </section>
+      <section id="ejercicio" data-background-size="contain" data-background-image="../fondo.png">
+      </section>
+      <section id="workbench" data-background-size="contain" data-background-image="../fondo.png">
+      </section>
+    </div>
+
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/reveal.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/plugin/markdown/markdown.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/plugin/highlight/highlight.js"></script>
+  <script>
+    // Full list of configuration options:
+    // https://revealjs.revealjs.com/config/
+    Reveal.initialize({
+      center: true,
+
+      transition: 'linear',
+      plugins: [RevealMarkdown, RevealHighlight]
+      // transitionSpeed: 'slow',
+      // backgroundTransition: 'slide'
+    });
+  </script>
+
+</body>
+
+</html>

@@ -1,0 +1,22 @@
+{
+  "name": "curso-sql",
+  "version": "1.0.0",
+  "description": "",
+  "main": "createUsuarios.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ralexrdz/mysql-intro.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ralexrdz/mysql-intro/issues"
+  },
+  "homepage": "https://github.com/ralexrdz/mysql-intro#readme",
+  "dependencies": {
+    "objects-to-csv": "^1.3.6"
+  }
+}
