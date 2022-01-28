@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
 
-  <title>reveal.js - Slide Backgrounds</title>
+  <title>SQL</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
@@ -32,7 +32,7 @@
             <li>Tipos de Datos</li>
             <li>Definición de Esquemas</li>
             <li>Operacines CRUD</li>
-            <li>Ejerecicio 1</li>
+            <li>Relaciones</li>
             <li>Instalación de Mysql Workbench</li>
           </ul>
         </section>
@@ -262,7 +262,64 @@
           Operadores
         </section>
       </section>
-      <section id="ejercicio" data-background-size="contain" data-background-image="../fondo.png">
+      <section id="relaciones" data-background-size="contain" data-background-image="../fondo.png">
+        <section>
+          <h3>Tipos de Relaciones</h3>
+          <ul>
+            <li class="fragment">Ralación uno a uno</li>
+            <li class="fragment">Ralación uno a muchos</li>
+            <li class="fragment">Ralación muchos a muchos </li>
+            <li class="fragment">Ralación de autoreferencia</li>
+          </ul>
+          <p style="font-size: 2rem;">Cada relación puede ser obligatoria o no</p>
+          <p style="font-size: 2rem;">Además, cada relación puede ser identificador o no</p>
+        </section>
+        <section>
+          <h3>Relación uno a uno</h3>
+          <p>
+            Una relación uno a uno permite que un solo registro de una tabla se relacione con un único registro de otra tabla. Se usa principalmente para:
+          </p>
+          <ul>
+            <li>Dividir el contexto de una entidad en dos tablas</li>
+            <li>Representar pertenencia única</li>
+            <li>Cierto conjunto de campos es compartido por varias tablas y queremos evitar duplicidad</li>
+          </ul>
+        </section>
+        <section>
+          <h3>Relación uno a muchos</h3>
+          <p>
+            La relación uno a muchos o viceversa permite que un solo registro de una tabla se asocie con uno o varios registros de otra tabla.
+          </p>
+          <ul>
+            <li>Es la más común</li>
+            <li>Permite hacer JOINS naturales</li>
+            <li>Las otras relaciones son subtipos de esta</li>
+          </ul>
+        </section>
+        <section>
+          <h3>Relaciones muchos a muchos</h3>
+          <p>Se una,  caso de que un registro de una <b>tabla1</b> pueda relacionasrse con varios registros de una <b>tabla2</b>, y a su vez, estos regisros de la <b>tabla2</b> peudan estar relacionados con varios registros de la <b>tabla1</b></p>
+          <p>Es necesario entonces, crear una tabla intermedia que guarde como Llaves Foráneas los ids de ambas tablas</p>
+          <p>En caso de esta relación ser única, pueden en conjuto estas llaves foráneas, ser la llave primaria; de lo contrario, es necesario crear una llave primaria extra en esta tabla intermedia</p>
+        </section>
+        <section>
+          <h3>Representación de tipos de relaciones en el modelo relacional</h3>
+          <img src="../cardinalidad.jpeg" alt="">
+        </section>
+        <section>
+          <h3>Llaves Foreaneas</h3>
+          <p>Dentro de SQL ultizaremos FOREIGN KEY, dentro de los comandos CREATE Y ALTER TABLE para representar y restringir ciertas acciones cuando existe relación entre tablas </p>
+          <pre><code data-trim>
+            [CONSTRAINT [symbol]] FOREIGN KEY
+    [index_name] (col_name, ...)
+    REFERENCES tbl_name (col_name,...)
+    [ON DELETE reference_option]
+    [ON UPDATE reference_option]
+
+reference_option:
+    RESTRICT | CASCADE | SET NULL | NO ACTION | SET DEFAULT
+          </code></pre>
+        </section>
       </section>
       <section id="workbench" data-background-size="contain" data-background-image="../fondo.png">
       </section>
