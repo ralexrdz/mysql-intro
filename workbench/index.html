@@ -10,9 +10,9 @@
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/reveal.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/theme/simple.css" id="theme">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/plugin/highlight/monokai.css" >
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/plugin/highlight/monokai.css">
   <style>
-    div.slides > section {
+    div.slides>section {
       padding-top: 100px;
     }
   </style>
@@ -22,7 +22,7 @@
 
   <div class="reveal">
 
-    <div class="slides" >
+    <div class="slides">
 
       <section id="indice" data-background-size="contain" data-background-image="../fondo.png">
 
@@ -56,7 +56,8 @@
           <h3>Desarrollo SQL</h3>
           <div><img src="../sql-dev.png" alt=""></div>
           <p>Inicia con la pagina de Conexiones, dado que es necesario realizar una para correr consultas</p>
-          <p>Desde aquí tendremos acceso a correr consultas, crear tablas, agregar columnas, crear procedimientos, indices, etc.</p>
+          <p>Desde aquí tendremos acceso a correr consultas, crear tablas, agregar columnas, crear procedimientos,
+            indices, etc.</p>
         </section>
         <section>
           <h3>Modelado de Datos</h3>
@@ -67,7 +68,8 @@
         <section>
           <h3>Wizard de Migración</h3>
           <div><img src="../migration.png" alt=""></div>
-          <p>Desde aquí nos permitirá facilitar la migración desde otros motores de SQL: MSSQL, Oracle, IBM, Postgres, etc.</p>
+          <p>Desde aquí nos permitirá facilitar la migración desde otros motores de SQL: MSSQL, Oracle, IBM, Postgres,
+            etc.</p>
         </section>
       </section>
       <section>
@@ -162,8 +164,49 @@
             <li>Mantener sincronizaos un esquema y un modelo</li>
           </ul>
         </section>
+      </section>
+      <section>
         <section>
-          <img src="../data-modeling.png" alt="">
+          <h3>Importación y exportación de datos</h3>
+          <p>Tener la capacidad de importar y exportar datos a nuestras bases de datos de sql nos permite fácilmente la
+            migración de los datos, el respaldo y la inserción de datos de prueba o modificados via otros medios.</p>
+        </section>
+        <section>
+          <h3>Utilizando el comando mysql y mysqldump desde la terminal</h3>
+          <p>Es necesario que exista la base de datos a utilizar</p>
+          <pre>
+            <code data-trim>
+              // para Exportar
+              mysqldump -uroot -p db_name &gt; archivo.sql
+            </code>
+            <code data-trim>
+              // para importar o correr cualquier comando sql
+              mysql -uroot -p db_name &lt; archivo.sql
+            </code>
+          </pre>
+        </section>
+        <section>
+          <h3>
+            Exportacion Desde Workbench
+          </h3>
+          <p>En el menu Server -&gt; Data Export</p>
+          <img src="../data-export.png" alt="">
+        </section>
+        <section>
+          <h3>Importación desde Workbench</h3>
+          <p>En el menu Server -&gt; Data Import</p>
+          <img src="../data-import.png" alt="">
+        </section>
+        <section>
+          <h3>Importación de CSV a Tabla en Workbench</h3>
+          <p>El archivo csv tiene que tener en la primera fila las columnas a insertar y en las siguientes sus valores para cada registro</p>
+          <p>Hay que tener la base de datos que ulilizaremos seleccionada como default</p>
+          <p>Dar click derecho sobre la tabla a la queremos insertar datos y seleccionar la opción Table Data Import Wizard</p>
+        </section>
+        <section>
+          <img src="../seiect-csv.png" alt="">
+          <img src="../use-table.png" alt="">
+          <img src="../verificar-columns.png" alt="">
         </section>
       </section>
     </div>
