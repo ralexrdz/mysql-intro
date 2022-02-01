@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/ralexrdz/mysql-intro#readme",
   "dependencies": {
+    "moment": "^2.29.1",
     "objects-to-csv": "^1.3.6"
   }
 }
