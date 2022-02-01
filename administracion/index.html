@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+
+  <title>reveal.js - Slide Backgrounds</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/reveal.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/theme/simple.css" id="theme">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/plugin/highlight/monokai.css" >
+  <style>
+    div.slides > section {
+      padding-top: 100px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="reveal">
+
+    <div class="slides" >
+
+      <section id="indice" data-background-size="contain" data-background-image="../fondo.png">
+
+        <section>
+          <h2>Administración de Mysql</h2>
+          <p></p>
+        </section>
+        <section>
+          <h3>Índice</h3>
+          <ul>
+            <li>Usuarios, roles y permisos</li>
+            <li></li>
+            <li></li>
+          </ul>
+        </section>
+      </section>
+      <section>
+        <section>
+          <h3>Usuarios, roles y permisos</h3>
+          <p>Creando usuarios y permisos podemos definir límites y privilegios con los cuales definir quienes puede hacer lecturas, modificaciones, inserciones y eliminaciones de registros en ciertas bases de datos y ciertas tablas</p>
+          <p>Muchas veces se tienen los mismos permisos para un conjunto de usuarios y modificarlos puede tomar mucho tiempo, para eso se usar roles.</p>
+        </section>
+        <section>
+          <h3>Creacion de Usuarios</h3>
+          <pre>
+          <code data-trim>
+            CREATE USER 'juan'@'localhost'
+            IDENTIFIED BY 'cadena_password';
+          </code>
+          <code>
+            IDENTIFIED WITH auth_plugin
+            
+            MAX_QUERIES_PER_HOUR count
+            MAX_UPDATES_PER_HOUR count
+            MAX_CONNECTIONS_PER_HOUR count
+            MAX_USER_CONNECTIONS count
+
+            PASSWORD EXPIRE
+            PASSWORD EXPIRE DEFAULT
+            PASSWORD EXPIRE NEVER
+            PASSWORD EXPIRE INTERVAL N DAY
+          </code>
+        </pre>
+
+        </section>
+        <section>
+          <h3>Comandos GRANT y REVOKE</h3>
+          <p>Se ultiza GRANT para otorgar y REVOKE para quitar permisos a usuarios</p>
+          <pre><code data-trim>
+            GRANT [ALL | SELECT | UPDATE | INSERT | DELETE, USAGE, etc] 
+            ON db1.*  
+            TO 'jeffrey'@'localhost';
+          </code></pre>
+        </section>
+        <section>
+          <h3>Roles</h3>
+          <p>Role es un conjuto de permisos. Es posible conceder y quitar permisos a un role</p>
+          <pre>
+            <code data-trim>
+              CREATE ROLE 
+              mi_db_dev, 
+              mi_db_read, 
+              mi_db_write;
+            </code>
+          </pre>
+        </section>
+        <section>
+          <p>Se le asignan permisos como si fueran usuarios</p>
+          <pre><code data-trim>
+            GRANT ALL 
+            ON mi_db.* 
+            TO mi_db_dev;
+
+
+            GRANT SELECT 
+            ON mi_db.* 
+            TO mi_db_read;
+
+
+            GRANT INSERT, UPDATE, DELETE
+            ON mi_db.* 
+            TO mi_db_write;
+          </code></pre>
+        </section>
+        <section>
+          <p>Y se asignan como si fueran permisos a usuarios</p>
+          <pre><code data-trim>
+            GRANT mi_db_dev,  
+              TO jesus@localhost;
+
+            GRANT mi_db_read, mi_db_write 
+              TO juan@localhost, pedro@localhost;
+          </code></pre>
+        </section>
+        <section>
+          <p>Es posible agregar un rol por default a cualquier usuario</p>
+          <pre><code data-trim>
+            SET DEFAULT ROLE ALL TO crm_read1@localhost;
+          </code></pre>
+        </section>
+      </section>
+    </div>
+
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/reveal.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/plugin/markdown/markdown.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/plugin/highlight/highlight.js"></script>
+  <script>
+    // Full list of configuration options:
+    // https://revealjs.revealjs.com/config/
+    Reveal.initialize({
+      center: true,
+
+      transition: 'linear',
+      plugins: [RevealMarkdown, RevealHighlight]
+      // transitionSpeed: 'slow',
+      // backgroundTransition: 'slide'
+    });
+  </script>
+
+</body>
+
+</html>

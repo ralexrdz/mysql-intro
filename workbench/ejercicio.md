@@ -16,3 +16,13 @@ Identificar
 - Como CES puedo acceder a ciertos privilegios
 - CES tiene niveles y según ellos tienen beneficios.
 - Los beneficios pueden ser descuentos, regalos, etc.
+
+
+Vistas
+
+- El producto más comprado el año pasado
+- El producto o los productos menos comprados este año
+- El producto con más inventario
+- El cliente que más distintos productos ha comprado y cuales son
+- Los productos que compraron los clientes de nivel 4
+- 
