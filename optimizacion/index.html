@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+
+  <title>Optimizacion de MySQL</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/reveal.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/theme/simple.css" id="theme">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/plugin/highlight/monokai.css" >
+  <style>
+    div.slides > section {
+      padding-top: 100px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="reveal">
+
+    <div class="slides" >
+
+      <section id="indice" data-background-size="contain" data-background-image="../fondo.png">
+
+        <section>
+          <h2>Optimizacion de Mysql</h2>
+          <p></p>
+        </section>
+        <section>
+          <h3>Índice</h3>
+          <ul>
+            <li>Buffer y Cache</li>
+            <li>Plan de ejecución</li>
+            <li>Monitoreo</li>
+          </ul>
+        </section>
+      </section>
+      <section id="buffer-cache">
+        <section style="font-size: 2rem;">
+          <h3>Buffer</h3>
+          <p>Area de almacenamiento para guardar en memoria cache, log de transacciones, indices, etc</p>
+          <p>Esta área es flusheada según cierto tiempo o si son modificados los datos que mantenía</p>
+          <p>Cuantas instancias de buffer en el pool se ocupan se configura con la variable <b>innodb_buffer_pool_instances</b> (Demasiadas instancias puede ocacionar problemas de memoria)</p>
+          <p>Cada base de datos toma cierto tiempo en construir este buffer, así que pruebas recién encendido el servidor pueden dar resultados poco realistas</p>
+        </section>
+        <section>
+          <h3>Read-Ahead o Prefetching</h3>
+          <p>Funcionalidad que predice según las páginas que has consultado, las posibles siguientes páginas y las mantiene en memoria para acelerar su acceso en caso de ser utilizado</p>
+          <p>Puede usar el algoritmo lineal (default) o el random y se modifican o monitorea su funcionamiento con estas variables:</p>
+          <ul style="font-size: 2rem;">
+            <li>innodb_read_ahead_threshold</li>
+            <li>innodb_random_read_ahead</li>
+            <li>Innodb_buffer_pool_read_ahead</li>
+            <li>Innodb_buffer_pool_read_ahead_evicted</li>
+            <li>Innodb_buffer_pool_read_ahead_rnd </li>
+          </ul>
+        </section>
+        <section>
+          <h3>Flushing</h3>
+          <p>Qué tan seguido se detona esta funcionalidad puede ser configurada con estas variables:</p>
+          <ul style="font-size: 2rem;">
+            <li>innodb_page_cleaners</li>
+            <li>innodb_max_dirty_pages_pct</li>
+            <li>innodb_max_dirty_pages_pct_lwm</li>
+            <li>innodb_flush_neighbors (HDD o SSD)</li>
+            <li>innodb_adaptive_flushing</li>
+          </ul>
+        </section>
+        <section style="font-size: 2rem;">
+          <h3>Restoring</h3>
+          <p>En caso de reiniciar el servidor, el buffer guardará un dump de las páginas usadas según esta variable: <b>innodb_buffer_pool_dump_pct</b></p>
+          <p>Para activar o desactivar esta funcionalidad se usan estas variables: <b>innodb_buffer_pool_dump_at_shutdown</b> y <b>
+            innodb-buffer-pool-load-at-startup
+          </b></p>
+          <p>o manualmente con <b>innodb_buffer_pool_dump_now</b> y <b>innodb_buffer_pool_load_now</b></p>
+          <p>Monitorea el status del buffer con <b>Innodb_buffer_pool_dump_status</b> o haciendo consultas a <b>performance_schema</b></p>
+        </section>
+      </section>
+      <section id="plan-ejecucion">
+        <section>
+          <h3>Plan de ejecución</h3>
+          <p>
+            explica cómo manejará la declaración, incluido cómo unirse a la tabla y en qué orden unirse a la tabla.
+          </p>
+          <ul>
+            <li>Orden de carga de las tablas</li>
+            <li>tipo de consulta SQL</li>
+            <li>Qué índices se pueden usar y qué índices se usan realmente</li>
+            <li>Relación de referencia entre tablas</li>
+            <li>Cuántas filas en una tabla son consultadas por el optimizador </li>
+          </ul>
+        </section>
+        <section>
+          <h3>Principales columnas</h3>
+            <p><b>possible_keys</b>: el nombre del índice que puede estar disponible.</p>
+            <p><b>key</b>muestra el nombre del índice realmente utilizado por mysql. Si está vacío (o es nulo), MySQL no usa el índice.</p>
+            <p>
+              <b>rows</b>: el número de registros que MySQL cree que debe escanear antes de encontrar el resultado correcto. Obviamente, el número ideal aquí es 1. 
+            </p>
+        </section>
+      </section>
+      <section>
+        <section>
+          <h3>Monitoreo</h3>
+          <ul>
+            <li>mysql status</li>
+            <li>Panel Dashboard de Workbench</li>
+          </ul>
+        </section>
+        <section>
+          <h3>mysql status</h3>
+          <p>dentro de la consola de Mysql correr: <b>show global status</b></p>
+          <p>En el shell del server correr: <b>mysqladmin ext -r -i60 -c3</b> </p>
+        </section>
+        <section>
+          <h3>Variables interesantes</h3>
+          <ul>
+            <li>Com_[begin|commit|delete|insert|update|select] comandos por segungo</li>
+            <li>Created_temp_disk_tables y Created_temp_tables</li>
+            <li>Handler_read_*</li>
+            <li>InnoDB_buffer_pool_pages_flushed</li>
+            <li>InnoDB_buffer_pool_pages_reads</li>
+            <li>InnoDB_data_fsync</li>
+            <li>InnoDB_log_waits</li>
+            <li>InnoDB_lsn_current</li>
+          </ul>
+        </section>
+        <section>
+          <h3>performance Schema</h3>
+          <pre><code data-trim>
+            SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES
+       WHERE TABLE_SCHEMA = 'performance_schema';
+          </code></pre>
+          <p>podemos obtener tiempos promedio de ejecusión para los distintos tipos de operaciones</p>
+        </section>
+        <section>
+          <h3>Desde Mysql Workbench</h3>
+          <p>Las características de monitoreo que ofrece MySQL funcionan bien para verificaciones rápidas y únicas. Pero cuando necesite un monitoreo continuo en tiempo real de una base de datos de producción, estas características integradas y funcionalidades básicas simplemente no serán suficientes. </p>
+          <p>Workbench nos permitirá analizar y visualizar estas métricas más fácilmente</p>
+        </section>
+        <section>
+          <h3>Dashboard</h3>
+          <img src="../dashboard.png" alt="">
+        </section>
+        <section>
+          <h3>Performance Reports</h3>
+          <img src="../performance-reports.png" alt="">
+        </section>
+      </section>
+      <section>
+        <section>
+          <h3>Otras herramientas</h3>
+          <ul>
+            <li>Grafana</li>
+            <li>EverSQL</li>
+            <li>PMM</li>
+          </ul>  
+        </section>
+        <section>
+          <h3>Grafana</h3>
+          <p>Visualizador de métricas</p>
+          <img src="../grafana.png" alt="">
+        </section>
+        <section>
+          <h3>EverSQL</h3>
+          <p>Optimizador de Queries y monitor usando AI</p>
+          <img src="../eversql.png" alt="">
+        </section>
+        <section>
+          <h3>PMM</h3>
+          <p>Panel de Monitoreo para DBS</p>
+          <img src="../percona.png" alt="">   
+        </section>
+        <section>
+          <h3>Vivid Cortex</h3>
+          <p>Monitor de SQL</p>
+          <img src="../vividcortex.png" alt=""> 
+        </section>
+      </section>
+    </div>
+
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/reveal.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/plugin/markdown/markdown.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/plugin/highlight/highlight.js"></script>
+  <script>
+    // Full list of configuration options:
+    // https://revealjs.revealjs.com/config/
+    Reveal.initialize({
+      center: true,
+
+      transition: 'linear',
+      plugins: [RevealMarkdown, RevealHighlight]
+      // transitionSpeed: 'slow',
+      // backgroundTransition: 'slide'
+    });
+  </script>
+
+</body>
+
+</html>

@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
 
-  <title>reveal.js - Slide Backgrounds</title>
+  <title>Administracion MySQL</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
@@ -34,8 +34,7 @@
           <h3>Índice</h3>
           <ul>
             <li>Usuarios, roles y permisos</li>
-            <li></li>
-            <li></li>
+            <li>Variables de Configuración</li>
           </ul>
         </section>
       </section>
@@ -52,7 +51,7 @@
             CREATE USER 'juan'@'localhost'
             IDENTIFIED BY 'cadena_password';
           </code>
-          <code>
+          <code class="fragment">
             IDENTIFIED WITH auth_plugin
             
             MAX_QUERIES_PER_HOUR count
@@ -75,6 +74,12 @@
             GRANT [ALL | SELECT | UPDATE | INSERT | DELETE, USAGE, etc] 
             ON db1.*  
             TO 'jeffrey'@'localhost';
+          </code></pre>
+        </section>
+        <section>
+          <p>Para obtener los permisos de un usuario usamos:</p>
+          <pre><code data-trim>
+            SHOW GRANTS FOR juan@localhost;
           </code></pre>
         </section>
         <section>
@@ -110,7 +115,7 @@
         <section>
           <p>Y se asignan como si fueran permisos a usuarios</p>
           <pre><code data-trim>
-            GRANT mi_db_dev,  
+            GRANT mi_db_dev
               TO jesus@localhost;
 
             GRANT mi_db_read, mi_db_write 
@@ -122,6 +127,34 @@
           <pre><code data-trim>
             SET DEFAULT ROLE ALL TO crm_read1@localhost;
           </code></pre>
+        </section>
+      </section>
+      <section id="conf">
+        <section>
+          <h3>Variables de configuración</h3>
+          <p>Ena ventaja de MySQL es que es posible configurar su variables desde único archivo, con una variable por línea (si se repite, toma en cuenta la última)</p>
+          <p>La ubicación de este archivo en sistemas Unix (también docker) es: <b>/etc/mysql/my.cnf</b> </p>
+          <p>La mayoría de las variables es posible cambiarlas durante una sesión para hacer pruebas sin resetear el servidor MySQL</p>
+        </section>
+        <section>
+          <h3>Variables más usadas</h3>
+          <ul>
+            <li>default_storage_enginge (InnoDB default)</li>
+            <li>innodb_buffer_pool_size ((80% server dedicado))</li>
+            <li>innodb_log_file_size (2 * tamaño transacciones 1-2hrs) </li>
+            <li>innodb_flush_log_at_trx_commit = 0</li>
+            <li>innodb_flush_method = O_DIRECT (solo para Linux)</li>
+            <li>innodb_thread_concurrency</li>
+          </ul>
+          <p>la ubicación del logfile es: <b>/var/lib/mysql/ib_logfile0</b></p>
+        </section>
+        <section>
+          <p>Para leer el valor de una variable, dentro de MySQL CLI: <b>SHOW VARIABLES LIKE 'have_query_cache';</b></p>
+          <p>Para sobreescribir una variable: <b>SET GLOBAL query_cache_type = ON;</b></p>
+        </section>
+        <section>
+          <h3>Desde Workbench</h3>
+          <img src="../server-values.png" alt="">
         </section>
       </section>
     </div>
